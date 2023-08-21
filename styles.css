@@ -1,0 +1,255 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  user-select: none;
+  background-color: #EEE;
+}
+
+.header {
+  align-content: center;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  height: 50px;
+  margin-bottom: 40px;
+}
+
+.title-to-export {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 20px;
+}
+
+.text-to-export {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+
+.text:last-of-type {
+  text-align: right;
+}
+
+h1 {
+  vertical-align: baseline;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* TODO delete this one */
+#to-capture {
+  text-align: center;
+}
+
+.to-capture {
+  /* this is applied just before it is exported */
+  width: 1450px;
+  /* text-align: center; */
+}
+
+.to-capture .lab-message {
+  top: 835px;
+  right: unset;
+  left: 1160px;
+}
+
+.to-capture .lab-arrow {
+  margin-top: -46px;
+}
+
+.to-capture .nat-message {
+  top: 835px;
+  left: 120px;
+}
+
+.to-capture .nat-arrow {
+  margin-top: -46px;
+}
+/* .buttons {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.button-container {
+  display: inline-block;
+  margin-left: auto;
+}      */
+
+.button {
+  margin: 5px;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  background-color: #BBB;
+  border: 2px solid #000;
+  border-radius: 4px;
+  height: calc(100% - 4px);
+  padding: 0 10px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.party-flex-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 50px;
+  min-width: 1240px;
+}
+
+.flex-column {
+  min-width: 230px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: calc(20% - 20px);
+  background-color: #000;
+  border: 3px solid black;
+}
+
+.flex-column.selected {
+  border: 3px solid red;
+}
+
+.flex-column#close-race {
+  margin: 10px 40%;
+}
+
+.flex-column > div {
+  min-height: 30px;
+  display: flex;
+  flex: 1;
+  font-size: 18px;
+  margin: 3px 5px;
+  background-color: black;
+  color: white;
+  text-shadow: -1px 0 black, 0 -1px black, 1px 0 black, 0 1px black;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.flex-column > div:first-of-type {
+  margin-top: 5px;
+}
+
+.flex-column > div:last-of-type {
+  margin-bottom: 5px;
+}
+
+.flex-row {
+  display: inline-flex;
+  width: 100%;
+  height: 70px;
+}
+
+.flex-row > div {
+  min-width: 145px;
+  display: flex;
+  cursor: pointer;
+  flex: 1;
+  font-size: 18px;
+  margin: 3px 5px;
+  background-color: black;
+  color: white;
+  text-shadow: -1px 0 black, 0 -1px black, 1px 0 black, 0 1px black;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.lab-message {
+  position: absolute;
+  top: 740px;
+  right: 120px;
+}
+
+.lab-arrow {
+  font-size: 40px;
+  margin-top: -50px;
+  margin-right: -220px;
+}
+
+.nat-message {
+  position: absolute;
+  top: 740px;
+  left: 120px;
+}
+
+.nat-arrow {
+  font-size: 40px;
+  margin-top: -50px;
+  margin-left: -230px;
+  transform: scaleX(-1);
+}
+
+.safe-nat {
+  background-color: #065BAA !important;
+}
+
+.likely-nat {
+  background-color: #0986F7 !important;
+}
+
+.lean-nat {
+  background-color: #8FC8FB !important;
+}
+
+.safe-lab {
+  background-color: #D82C20 !important;
+}
+
+.likely-lab {
+  background-color: #E7695F !important;
+}
+
+.lean-lab {
+  background-color: #F1A7A1 !important;
+}
+
+.close-race {
+  background-color: #767171 !important;
+}
+
+.safe-act {
+  background-color: #FFDF00 !important;
+}
+
+.likely-act {
+  background-color: #FFED69 !important;
+}
+
+.lean-act {
+  background-color: #FFF9C9 !important;
+}
+
+.safe-grn {
+  background-color: #4BB965 !important;
+}
+
+.likely-grn {
+  background-color: #7BCB8E !important;
+}
+
+.lean-grn {
+  background-color: #AFDFBA !important;
+}
+
+.safe-tpm {
+  background: linear-gradient(to right, #000 50%, #C12026 50%);
+}
+
+.likely-tpm {
+  background: linear-gradient(to right, #3B3838 50%, #E0444B 50%);
+}
+
+.lean-tpm {
+  background: linear-gradient(to right, #AFABAB 50%, #E8747A 50%);
+}

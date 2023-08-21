@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>NZ Electorates</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    const levels = ["safe", "likely", "lean"];
+    const letterMap = {"ā":"a", "ī":"i", "ō":"o", "ū":"u", " ":"-"}
+    var selected = 'close-race'
+    var results2020 = {}
+
+    async function handlePageLoad() {
+      await fetch('./2020-results.json').then(resp => resp.json()).then(json => results2020 = json)
+      var rowElements = document.getElementsByClassName("flex-row")
+      for(var rowElem of rowElements) {
+        for (var elem of rowElem.children) {
+          var simpleName = elem.textContent.toLowerCase().replace(/[āīōū ]/g, match => letterMap[match])
+          elem.id = simpleName
+          elem.className = results2020[simpleName]
+          elem.setAttribute("onclick", "updateElement(id)")
+        }
+      }
+
+      var colElements = document.getElementsByClassName("flex-column")
+      for(var colElem of colElements) {
+        colElem.setAttribute("onclick", "updateSelected(id)")
+      }
+    }
+
+    function load2020Results() {
+      var rowElements = document.getElementsByClassName("flex-row")
+      for(var rowElem of rowElements) {
+        for (var elem of rowElem.children) {
+          elem.className = results2020[elem.id]
+        }
+      }
+    }
+
+    function updateSelected(value) {
+      selected = value
+      var elements = document.getElementsByClassName("selected")
+      for (var elem of elements) {
+          elem.className = elem.classList[0]
+      }
+      var selectedElem = document.getElementById(value)
+      selectedElem.classList.add("selected")
+    }
+
+    // TODO maybe we can set the name of all the elements based on the contents?
+
+    function updateElement(id) {
+      console.log('updating id: ' + id);
+      var elem = document.getElementById(id)
+      var currClass = elem.getAttribute('class')
+      // TODO need to pass or get a variable for the value we should be updating
+      if (selected === 'close-race') {
+        elem.className = 'close-race'
+      } else if (currClass.includes(selected)) {
+        var nextIndex = (levels.findIndex((val) => val === currClass.split('-')[0]) + 1) % 3
+        elem.className = `${levels[nextIndex]}-${currClass.split('-')[1]}`
+      } else {
+        elem.className = `safe-${selected}`
+      }
+    }
+
+    function capture() {
+
+      var element = document.querySelector("#to-capture")
+      // var firstChild = element.childNodes[1]
+
+      // console.log(element.childNodes)
+      // console.log(firstChild)
+      // console.log(firstChild)
+
+      const newNodes = []
+
+      // newNode = document.createElement("div")
+      // newNode.textContent = "https://hindley.me/interactive-electoral-ratings"
+      // newNode.className = "left-text-to-export"
+      // element.insertAdjacentElement("beforeend", newNode)
+      // newNodes.push(newNode)
+
+      var textNode = document.createElement("div")
+      textNode.className = "text-to-export"
+
+      var newNode = document.createElement("div")
+      newNode.textContent = "Inspired by @120Aotearoa & @Overhang_AoNZ"
+      newNode.className = "text"
+      textNode.insertAdjacentElement("afterbegin", newNode)
+
+      newNode = document.createElement("div")
+      newNode.textContent = "Tool created by Joshua Hindley (@jhindleynz)"
+      newNode.className = "text"
+      textNode.insertAdjacentElement("afterbegin", newNode)
+      element.insertAdjacentElement("afterbegin", textNode)
+      newNodes.push(textNode)
+
+      newNode = document.createElement("div")
+      newNode.textContent = "Electoral Ratings"
+      newNode.className = "title-to-export"
+      element.insertAdjacentElement("afterbegin", newNode)
+      newNodes.push(newNode)
+
+      element.className = "to-capture"
+
+      html2canvas(element, {backgroundColor: '#EEE', height: 780, width: 1470, x: -10}).then(canvas => {
+          // document.body.appendChild(canvas)
+          canvas.toDataURL('image/png')
+          var a = document.createElement("a")
+          a.href = canvas.toDataURL("image/png");
+          a.download = "electorate-ratings.png";
+          a.click(); 
+      });
+
+      element.className = null
+      for(var childNode of newNodes) {
+        element.removeChild(childNode)
+      }
+    }
+  </script>
+</head>
+<body onload="handlePageLoad()">
+  <!-- TODO maybe add a loading page -->
+  <div class="header">
+    
+    <!-- TODO maybe add arrows to explain the order -->
+
+    <!-- TODO replace text with icons -->
+    <!-- TODO add popup menus with more choices (export JSON, export PNG) -->
+    <!-- TODO add additional buttons for posting on twitter or loading the latest projection -->
+    <div class="button" onclick="load2020Results()">
+      LOAD 2020 RESULTS
+    </div>
+    <h1>Interactive Electorate Ratings</h1>
+    <div class="button" onclick="capture()">
+      EXPORT RATINGS (PNG)
+    </div>
+  </div>
+  <div id="to-capture">
+    <div class="flex-container">
+      <div class="flex-row">
+        <div>SELWYN</div>
+        <div>RANGITĪKEI</div>
+        <div>NORTHLAND</div>
+        <div>WHANGĀREI</div>
+        <div>ŌTAKI</div>
+        <div>EAST COAST</div>
+        <div>TAIERI</div>
+        <div>MANA</div>
+      </div>
+      <div class="flex-row">
+        <div>TAUPŌ</div>
+        <div>TARANAKI-<br/>KING COUNTRY</div>
+        <div>AUCKLAND CENTRAL</div>
+        <div>MAUNGAKIEKIE</div>
+        <div>ILAM</div>
+        <div>WAIRARAPA</div>
+        <div>PALMERSTON NORTH</div>
+        <div>MANUREWA</div>
+      </div>
+      <div class="flex-row">
+        <div>WAIKATO</div>
+        <div>WAITAKI</div>
+        <div>WAIARIKI</div>
+        <div>TĀMAKI MAKAURAU</div>
+        <div>HUTT SOUTH</div>
+        <div>TE TAI TONGA</div>
+        <div>NEW LYNN</div>
+        <div>CHRISTCHURCH EAST</div>
+      </div>
+      <div class="flex-row">
+        <div>PAPAKURA</div>
+        <div>BAY OF PLENTY</div>
+        <div>EPSOM</div>
+        <div>TE TAI HAUĀURU</div>
+        <div>RANGITATA</div>
+        <div>TAKANINI</div>
+        <div>BANKS PENINSULA</div>
+        <div>PANMURE-ŌTĀHUHU</div>
+      </div>
+      <div class="flex-row">
+        <div>SOUTHLAND</div>
+        <div>COROMANDEL</div>
+        <div>INVERCARGIL</div>
+        <div>TUKITUKI</div>
+        <div>NELSON</div>
+        <div>TE TAI TOKERAU</div>
+        <div>MOUNT ROSKILL</div>
+        <div>WELLINGTON CENTRAL</div>
+      </div>
+      <div class="flex-row">
+        <div>WHANGAPĀROA</div>
+        <div>NORTH SHORE</div>
+        <div>ROTORUA</div>
+        <div>UPPER HARBOUR</div>
+        <div>NAPIER</div>
+        <div>WHANGANUI</div>
+        <div>CHRISTCHURCH CENTRAL</div>
+        <div>RONGATAI</div>
+      </div>
+      <div class="flex-row">
+        <div>TĀMAKI</div>
+        <div>BOTANY</div>
+        <div>WAIMAKARIRI</div>
+        <div>NORTHCOTE</div>
+        <div>IKAROA-RĀWHITI</div>
+        <div>HAURAKI-WAIKATO</div>
+        <div>WIGRAM</div>
+        <div>MĀNGERE</div>
+      </div>
+      <div class="flex-row">
+        <div>EAST COAST BAYS</div>
+        <div>PORT WAIKATO</div>
+        <div>TAURANGA</div>
+        <div>NEW PLYMOUTH</div>
+        <div>WEST COAST-TASMAN</div>
+        <div>TE ATATŪ</div>
+        <div>DUNEDIN</div>
+        <div>REMUTAKA</div>
+      </div>
+      <div class="flex-row">
+        <div>PUKURANGA</div>
+        <div>KAIPARA KI MAHURANGI</div>
+        <div>KAIKŌURA</div>
+        <div>HAMILTON EAST</div>
+        <div>HAMILTON WEST</div>
+        <div>ŌHĀRIU</div>
+        <div>KELSTON</div>
+        <div>MOUNT ALBERT</div>
+      </div>
+    </div>
+    <div class="nat-message">
+      National's Safest Seat, 2020 <div class="nat-arrow">⤴</div>
+    </div>
+    <div class="lab-message">
+      Labour's Safest Seat, 2020 <div class="lab-arrow">⤴</div>
+    </div>
+    <!-- TODO need to additional elements on top here (i.e. arrows for national and Labour's biggest wins) -->
+  </div>
+
+  <!-- TODO we could maybe remove these in favour of simple icons at the top and a ? icon that opens a help window -->
+  <div class="party-flex-container">
+    
+    <div id="close-race" class="flex-column selected">
+      <div class="close-race">CLOSE RACE</div>
+    </div>
+    <div id='nat' class="flex-column">
+      <div>NATIONAL</div>
+      <div class="safe-nat">SAFE</div>
+      <div class="likely-nat">LIKELY</div>
+      <div class="lean-nat">LEAN</div>
+    </div>
+    <div id='lab' class="flex-column">
+      <div>LABOUR</div>
+      <div class="safe-lab">SAFE</div>
+      <div class="likely-lab">LIKELY</div>
+      <div class="lean-lab">LEAN</div>
+    </div>
+    <div id='act' class="flex-column">
+      <div>ACT</div>
+      <div class="safe-act">SAFE</div>
+      <div class="likely-act">LIKELY</div>
+      <div class="lean-act">LEAN</div>
+    </div>
+    <div id='grn' class="flex-column">
+      <div>GREEN</div>
+      <div class="safe-grn">SAFE</div>
+      <div class="likely-grn">LIKELY</div>
+      <div class="lean-grn">LEAN</div>
+    </div>
+    <div id='tpm' class="flex-column">
+      <div>MĀORI</div>
+      <div class="safe-tpm">SAFE</div>
+      <div class="likely-tpm">LIKELY</div>
+      <div class="lean-tpm">LEAN</div>
+    </div>
+  </div>
+</body>
+</html>
