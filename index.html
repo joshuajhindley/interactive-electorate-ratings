@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto">
   <link rel="stylesheet" href="styles.css" />
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ismobilejs@1/dist/isMobile.min.js"></script>
   <script>
     const levels = ["safe", "likely", "lean"];
     const letterMap = {"ā":"a", "ī":"i", "ō":"o", "ū":"u", " ":"-"}
@@ -15,7 +16,7 @@
     async function handlePageLoad() {
       await fetch('./2020-results.json').then(resp => resp.json()).then(json => results2020 = json)
       var rowElements = document.getElementsByClassName("flex-row")
-      for(var rowElem of rowElements) {
+      for (var rowElem of rowElements) {
         for (var elem of rowElem.children) {
           var simpleName = elem.textContent.toLowerCase().replace(/[āīōū ]/g, match => letterMap[match])
           elem.id = simpleName
@@ -25,8 +26,13 @@
       }
 
       var colElements = document.getElementsByClassName("flex-column")
-      for(var colElem of colElements) {
+      for (var colElem of colElements) {
         colElem.setAttribute("onclick", "updateSelected(id)")
+      }
+
+      if (isMobile.any) {
+        var overlayElem = document.getElementsByClassName("overlay").item(0)
+        overlayElem.className = "overlay"
       }
     }
 
@@ -117,11 +123,15 @@
   </script>
 </head>
 <body onload="handlePageLoad()">
-  <!-- TODO maybe add a loading page -->
+  <div class="overlay hidden">
+    <div class="overlay-text">
+      We're sorry, but this tool is not yet working properly on mobile devices.<br/><br/><br/>
+      As soon as we get this working this message will be removed.<br/><br/><br/>
+      In the meantime, please make use of a computer to use this tool.
+    </div>
+  </div>
   <div class="header">
-    
     <!-- TODO maybe add arrows to explain the order -->
-
     <!-- TODO replace text with icons -->
     <!-- TODO add popup menus with more choices (export JSON, export PNG) -->
     <!-- TODO add additional buttons for posting on twitter or loading the latest projection -->
@@ -226,6 +236,7 @@
         <div>MOUNT ALBERT</div>
       </div>
     </div>
+    <!-- TODO use icon instead of arrow -->
     <div class="nat-message">
       National's Safest Seat, 2020 <div class="nat-arrow">⤴</div>
     </div>
