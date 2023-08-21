@@ -91,10 +91,16 @@
       element.insertAdjacentElement("afterbegin", newNode)
       newNodes.push(newNode)
 
+      // TODO add total number of seats by party
+      // newNode = document.createElement("div")
+      // newNode.textContent = "Electoral Ratings"
+      // newNode.className = "title-to-export"
+      // element.insertAdjacentElement("beforeend", newNode)
+      // newNodes.push(newNode)
+
       element.className = "to-capture"
 
-      // TODO the quality of the export seems quite poor
-      html2canvas(element, {backgroundColor: '#EEE', height: 780, width: 1470, x: -10}).then(canvas => {
+      html2canvas(element, {backgroundColor: '#EEE', height: 780, width: 1470, x: -10, scale: 3}).then(canvas => {
           // document.body.appendChild(canvas)
           canvas.toDataURL('image/png')
           var a = document.createElement("a")
@@ -226,7 +232,6 @@
     <div class="lab-message">
       Labour's Safest Seat, 2020 <div class="lab-arrow">⤴</div>
     </div>
-    <!-- TODO need to additional elements on top here (i.e. arrows for national and Labour's biggest wins) -->
   </div>
 
   <!-- TODO we could maybe remove these in favour of simple icons at the top and a ? icon that opens a help window -->
