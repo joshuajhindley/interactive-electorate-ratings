@@ -67,21 +67,8 @@
     }
 
     function capture() {
-
       var element = document.querySelector("#to-capture")
-      // var firstChild = element.childNodes[1]
-
-      // console.log(element.childNodes)
-      // console.log(firstChild)
-      // console.log(firstChild)
-
       const newNodes = []
-
-      // newNode = document.createElement("div")
-      // newNode.textContent = "https://hindley.me/interactive-electoral-ratings"
-      // newNode.className = "left-text-to-export"
-      // element.insertAdjacentElement("beforeend", newNode)
-      // newNodes.push(newNode)
 
       var textNode = document.createElement("div")
       textNode.className = "text-to-export"
@@ -106,6 +93,7 @@
 
       element.className = "to-capture"
 
+      // TODO the quality of the export seems quite poor
       html2canvas(element, {backgroundColor: '#EEE', height: 780, width: 1470, x: -10}).then(canvas => {
           // document.body.appendChild(canvas)
           canvas.toDataURL('image/png')
@@ -222,7 +210,7 @@
         <div>REMUTAKA</div>
       </div>
       <div class="flex-row">
-        <div>PUKURANGA</div>
+        <div>PAKURANGA</div>
         <div>KAIPARA KI MAHURANGI</div>
         <div>KAIKŌURA</div>
         <div>HAMILTON EAST</div>
