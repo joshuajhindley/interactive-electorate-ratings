@@ -33,7 +33,7 @@ body {
   display: flex;
   height: 50px;
   margin-bottom: 40px;
-  min-width: 1240px;
+  min-width: 1305px;
 }
 .header .button {
   margin: 5px;
@@ -108,7 +108,7 @@ body {
 h1 {
   vertical-align: baseline;
   font-weight: bold;
-  min-width: 1240px;
+  min-width: 1305px;
 }
 
 .to-capture {
@@ -172,10 +172,10 @@ h1 {
   top: 810px;
   right: 8vw;
 }
-@media screen and (max-width: 1255px) {
+@media screen and (max-width: 1320px) {
   .lab-message {
     right: unset;
-    left: 966px;
+    left: 1026px;
     max-height: 20px;
     white-space: nowrap;
     text-align: left;
@@ -194,10 +194,10 @@ h1 {
   top: 810px;
   left: 8vw;
 }
-@media screen and (max-width: 1255px) {
+@media screen and (max-width: 1320px) {
   .nat-message {
     white-space: nowrap;
-    left: 100px;
+    left: 105px;
   }
 }
 
@@ -226,10 +226,10 @@ h1 {
   margin-bottom: 36px;
   font-size: 12px;
 }
-@media screen and (max-width: 1255px) {
+@media screen and (max-width: 1320px) {
   .version {
     position: absolute;
-    left: 852px;
+    left: 884px;
   }
 }
 
