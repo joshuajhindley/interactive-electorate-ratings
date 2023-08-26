@@ -13,7 +13,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-E0J9QM5K43');
   </script>
   <script>
@@ -34,14 +33,18 @@
         }
       }
 
-      var colElements = document.getElementsByClassName("flex-column")
-      for (var colElem of colElements) {
-        colElem.setAttribute("onclick", "updateSelected(id)")
+      var optionsElems = document.getElementsByClassName("options")
+      for (var optionsElem of optionsElems) {
+        for (var option of optionsElem.children) {
+          if (option.className !== "help") {
+            option.setAttribute("onclick", "updateSelected(id)")
+          }
+        }
       }
 
       if (isMobile.any) {
         var overlayElem = document.getElementsByClassName("overlay").item(0)
-        overlayElem.className = "overlay"
+        overlayElem.style.display = "block"
       }
     }
 
@@ -64,13 +67,10 @@
       selectedElem.classList.add("selected")
     }
 
-    // TODO maybe we can set the name of all the elements based on the contents?
-
     function updateElement(id) {
       console.log('updating id: ' + id);
       var elem = document.getElementById(id)
       var currClass = elem.getAttribute('class')
-      // TODO need to pass or get a variable for the value we should be updating
       if (selected === 'close-race') {
         elem.className = 'close-race'
       } else if (currClass.includes(selected)) {
@@ -79,6 +79,28 @@
       } else {
         elem.className = `safe-${selected}`
       }
+    }
+
+    function showHelpModal() {
+      const container = document.getElementsByClassName("modal-container").item(0)
+      container.style.display = 'block'
+
+      const closeButton = document.getElementsByClassName("close-modal").item(0)
+
+      closeButton.onclick = function() {
+        container.style.display = 'none'
+        window.onclick = null
+      }
+
+      window.onclick = function(event) {
+        if (event.target == container) {
+          container.style.display = 'none'
+          window.onclick = null
+        }
+      }
+
+
+
     }
 
     function capture() {
@@ -121,7 +143,7 @@
           var a = document.createElement("a")
           a.href = canvas.toDataURL("image/png");
           a.download = "electorate-ratings.png";
-          a.click(); 
+          a.click();
       });
 
       element.className = null
@@ -132,13 +154,14 @@
   </script>
 </head>
 <body onload="handlePageLoad()">
-  <div class="overlay hidden">
+  <div class="overlay">
     <div class="overlay-text">
       We're sorry, but this tool is not yet working properly on mobile devices.<br/><br/><br/>
       As soon as we get this working this message will be removed.<br/><br/><br/>
       In the meantime, please make use of a computer to use this tool.
     </div>
   </div>
+  <h1>Interactive Electorate Ratings</h1>
   <div class="header">
     <!-- TODO maybe add arrows to explain the order -->
     <!-- TODO replace text with icons -->
@@ -147,7 +170,15 @@
     <div class="button" onclick="load2020Results()">
       LOAD 2020 RESULTS
     </div>
-    <h1>Interactive Electorate Ratings</h1>
+    <div class="options">
+      <div id="close-race" class="close-race selected"></div>
+      <div id="nat" class="safe-nat"></div>
+      <div id="lab" class="safe-lab"></div>
+      <div class="help" onclick="showHelpModal()">?</div>
+      <div id="act" class="safe-act"></div>
+      <div id="grn" class="safe-grn"></div>
+      <div id="tpm" class="safe-tpm"><div></div><div></div></div>
+    </div>
     <div class="button" onclick="capture()">
       EXPORT RATINGS (PNG)
     </div>
@@ -254,41 +285,50 @@
     </div>
   </div>
 
-  <!-- TODO we could maybe remove these in favour of simple icons at the top and a ? icon that opens a help window -->
-  <div class="party-flex-container">
-    
-    <div id="close-race" class="flex-column selected">
-      <div class="close-race">CLOSE RACE</div>
-    </div>
-    <div id='nat' class="flex-column">
-      <div>NATIONAL</div>
-      <div class="safe-nat">SAFE</div>
-      <div class="likely-nat">LIKELY</div>
-      <div class="lean-nat">LEAN</div>
-    </div>
-    <div id='lab' class="flex-column">
-      <div>LABOUR</div>
-      <div class="safe-lab">SAFE</div>
-      <div class="likely-lab">LIKELY</div>
-      <div class="lean-lab">LEAN</div>
-    </div>
-    <div id='act' class="flex-column">
-      <div>ACT</div>
-      <div class="safe-act">SAFE</div>
-      <div class="likely-act">LIKELY</div>
-      <div class="lean-act">LEAN</div>
-    </div>
-    <div id='grn' class="flex-column">
-      <div>GREEN</div>
-      <div class="safe-grn">SAFE</div>
-      <div class="likely-grn">LIKELY</div>
-      <div class="lean-grn">LEAN</div>
-    </div>
-    <div id='tpm' class="flex-column">
-      <div>MĀORI</div>
-      <div class="safe-tpm">SAFE</div>
-      <div class="likely-tpm">LIKELY</div>
-      <div class="lean-tpm">LEAN</div>
+  <div class="modal-container">
+    <div class="modal">
+      <div class="help-title">Help</div>
+      <div class="help-text">
+        To use this tool simply click one of the six options at the top of the page and then click an electorate to update the rating.<br/>
+        The base options are: <span class="close-race">Close Race</span>, <span class="safe-nat">National</span>, <span class="safe-lab">Labour</span>, <span class="safe-act">ACT</span>, <span class="safe-grn">Greens</span>, and <span class="safe-tpm">Te Pāti Māori</span>, respectively.<br/>
+        Each of the base options that are parties have different categories - safe, likely, and lean. The formatting of these are shown below.
+      </div>
+      <div class="close-modal">x</div>
+      <div class="party-flex-container">
+        <div id="close-race" class="flex-column">
+          <div class="close-race">CLOSE RACE</div>
+        </div>
+        <div id='nat' class="flex-column">
+          <div>NATIONAL</div>
+          <div class="safe-nat">SAFE</div>
+          <div class="likely-nat">LIKELY</div>
+          <div class="lean-nat">LEAN</div>
+        </div>
+        <div id='lab' class="flex-column">
+          <div>LABOUR</div>
+          <div class="safe-lab">SAFE</div>
+          <div class="likely-lab">LIKELY</div>
+          <div class="lean-lab">LEAN</div>
+        </div>
+        <div id='act' class="flex-column">
+          <div>ACT</div>
+          <div class="safe-act">SAFE</div>
+          <div class="likely-act">LIKELY</div>
+          <div class="lean-act">LEAN</div>
+        </div>
+        <div id='grn' class="flex-column">
+          <div>GREEN</div>
+          <div class="safe-grn">SAFE</div>
+          <div class="likely-grn">LIKELY</div>
+          <div class="lean-grn">LEAN</div>
+        </div>
+        <div id='tpm' class="flex-column">
+          <div>MĀORI</div>
+          <div class="safe-tpm">SAFE</div>
+          <div class="likely-tpm">LIKELY</div>
+          <div class="lean-tpm">LEAN</div>
+        </div>
+      </div>
     </div>
   </div>
 </body>

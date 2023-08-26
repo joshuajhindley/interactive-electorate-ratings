@@ -1,13 +1,16 @@
 body {
-  font-family: 'Roboto', sans-serif;
-  user-select: none;
+  font-family: "Roboto", sans-serif;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  text-align: center;
   background-color: #EEE;
 }
 
 .overlay {
   position: fixed;
   overflow: hidden;
-  display: block;
+  display: none;
   background-color: #222;
   min-height: 100%;
   min-width: 100%;
@@ -18,94 +21,117 @@ body {
   z-index: 2;
   cursor: default;
 }
-
-.overlay-text {
-  text-align: center;
+.overlay .overlay-text {
   margin: 400px 100px;
   font-size: 55px;
   color: white;
 }
 
-.overlay.hidden {
-  display: none;
-}
-
 .header {
-  align-content: center;
   align-items: center;
   justify-content: space-around;
   display: flex;
   height: 50px;
   margin-bottom: 40px;
 }
-
-.title-to-export {
-  font-size: 48px;
-  font-weight: bold;
-  margin: 20px;
+.header .button {
+  margin: 5px;
+  width: 200px;
+  line-height: 48px;
+  cursor: pointer;
+  background-color: #BBB;
+  border: 2px solid #000;
+  border-radius: 4px;
+  height: calc(100% - 4px);
+  padding: 0 10px;
 }
-
-.text-to-export {
-  text-align: left;
+.header .options {
   display: flex;
-  justify-content: space-between;
-  margin: 0 10px;
 }
-
-.text:last-of-type {
-  text-align: right;
+.header .options .selected {
+  box-shadow: inset 0 0 0 2px #000;
+}
+.header .options > div {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin: 0 10px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.header .options > div.help {
+  font-size: 36px;
+  line-height: 50px;
+  background-color: white;
+}
+.header .options > div#nat {
+  background: linear-gradient(to bottom, #065BAA 0, #065BAA 33%, #0986F7 33%, #0986F7 66%, #8FC8FB 66%, #8FC8FB 100%);
+}
+.header .options > div#lab {
+  background: linear-gradient(to bottom, #D82C20 0, #D82C20 33%, #E7695F 33%, #E7695F 66%, #F1A7A1 66%, #F1A7A1 100%);
+}
+.header .options > div#act {
+  background: linear-gradient(to bottom, #FFDF00 0, #FFDF00 33%, #FFED69 33%, #FFED69 66%, #FFF9C9 66%, #FFF9C9 100%);
+}
+.header .options > div#grn {
+  background: linear-gradient(to bottom, #4BB965 0, #4BB965 33%, #7BCB8E 33%, #7BCB8E 66%, #AFDFBA 66%, #AFDFBA 100%);
+}
+.header .options > div#tpm {
+  background: none;
+}
+.header .options > div#tpm > div {
+  position: absolute;
+  z-index: -1;
+  font-size: 12px;
+  width: 25px;
+  height: 50px;
+  cursor: pointer;
+  background-repeat: no-repeat !important;
+}
+.header .options > div#tpm > div:first-of-type {
+  border-radius: 25px 0 0 25px;
+  background: linear-gradient(to bottom, #000 0, #000 33%, #3B3838 33%, #3B3838 66%, #AFABAB 66%, #AFABAB 100%);
+}
+.header .options > div#tpm > div:last-of-type {
+  margin-left: 25px;
+  border-radius: 0 25px 25px 0;
+  background: linear-gradient(to bottom, #C12026 0, #C12026 33%, #E0444B 33%, #E0444B 66%, #E8747A 66%, #E8747A 100%);
 }
 
 h1 {
   vertical-align: baseline;
-  text-align: center;
   font-weight: bold;
 }
 
 .to-capture {
   /* this is applied just before it is exported */
   width: 1450px;
-  text-align: center;
 }
-
+.to-capture .title-to-export {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 20px;
+}
+.to-capture .text-to-export {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+.to-capture .text-to-export .text:last-of-type {
+  text-align: right;
+}
 .to-capture .lab-message {
-  top: 835px;
+  top: 910px;
   right: unset;
   left: 1160px;
 }
-
-.to-capture .lab-arrow {
-  margin-top: -46px;
-}
-
 .to-capture .nat-message {
-  top: 835px;
+  top: 910px;
   left: 120px;
 }
-
-.to-capture .nat-arrow {
+.to-capture .lab-arrow, .to-capture .nat-arrow {
   margin-top: -46px;
-}
-/* .buttons {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.button-container {
-  display: inline-block;
-  margin-left: auto;
-}      */
-
-.button {
-  margin: 5px;
-  cursor: pointer;
-  align-items: center;
-  display: flex;
-  background-color: #BBB;
-  border: 2px solid #000;
-  border-radius: 4px;
-  height: calc(100% - 4px);
-  padding: 0 10px;
 }
 
 .flex-container {
@@ -113,64 +139,12 @@ h1 {
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-
-.party-flex-container {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin-top: 50px;
-  min-width: 1240px;
-}
-
-.flex-column {
-  min-width: 230px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  width: calc(20% - 20px);
-  background-color: #000;
-  border: 3px solid black;
-}
-
-.flex-column.selected {
-  border: 3px solid red;
-}
-
-.flex-column#close-race {
-  margin: 10px 40%;
-}
-
-.flex-column > div {
-  min-height: 30px;
-  display: flex;
-  flex: 1;
-  font-size: 18px;
-  margin: 3px 5px;
-  background-color: black;
-  color: white;
-  /* text-shadow: -1px 0 black, 0 -1px black, 1px 0 black, 0 1px black; */
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-.flex-column > div:first-of-type {
-  margin-top: 5px;
-}
-
-.flex-column > div:last-of-type {
-  margin-bottom: 5px;
-}
-
-.flex-row {
+.flex-container .flex-row {
   display: inline-flex;
   width: 100%;
   height: 70px;
 }
-
-.flex-row > div {
+.flex-container .flex-row > div {
   min-width: 145px;
   display: flex;
   cursor: pointer;
@@ -179,17 +153,15 @@ h1 {
   margin: 3px 5px;
   background-color: black;
   color: white;
-  /* text-shadow: -1px 0 black, 0 -1px black, 1px 0 black, 0 1px black; */
   align-items: center;
-  text-align: center;
   justify-content: center;
   font-weight: bold;
 }
 
 .lab-message {
   position: absolute;
-  top: 740px;
-  right: 120px;
+  top: 810px;
+  right: 150px;
 }
 
 .lab-arrow {
@@ -201,8 +173,8 @@ h1 {
 
 .nat-message {
   position: absolute;
-  top: 740px;
-  left: 120px;
+  top: 810px;
+  left: 130px;
 }
 
 .nat-arrow {
@@ -213,18 +185,87 @@ h1 {
   transform: scaleX(-1);
 }
 
-/* FIX ARROWS ON CHROME */
-@supports (-webkit-appearance:none) and (not (overflow:-webkit-marquee))
-and (not (-ms-ime-align:auto)) and (not (-moz-appearance:none)) { 
-  .lab-arrow  {
+/* FIXES ARROWS ON CHROME */
+@supports (-webkit-appearance: none) and (not (overflow: -webkit-marquee)) and (not (-ms-ime-align: auto)) and (not (-moz-appearance: none)) {
+  .lab-arrow {
     margin-top: -37px !important;
     right: -34px;
   }
-
   .nat-arrow {
     margin-top: -37px !important;
     left: -34px;
   }
+}
+.modal-container {
+  position: fixed;
+  display: none;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-container .modal {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 950px;
+}
+.modal-container .modal .help-title {
+  font-size: 24px;
+}
+.modal-container .modal .help-text span {
+  padding: 2px;
+  color: white;
+}
+.modal-container .modal .close-modal {
+  float: right;
+  margin-top: -95px;
+  font-size: 24px;
+  transform: scaleX(1.3);
+  cursor: pointer;
+}
+.modal-container .modal .party-flex-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 20px;
+}
+.modal-container .modal .party-flex-container .flex-column {
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  width: calc(20% - 20px);
+  background-color: #000;
+  border: 3px solid black;
+}
+.modal-container .modal .party-flex-container .flex-column.selected {
+  border: 3px solid red;
+}
+.modal-container .modal .party-flex-container .flex-column#close-race {
+  margin: 10px 40%;
+}
+.modal-container .modal .party-flex-container .flex-column > div {
+  min-height: 30px;
+  display: flex;
+  flex: 1;
+  font-size: 18px;
+  margin: 3px 5px;
+  background-color: black;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.modal-container .modal .party-flex-container .flex-column > div:first-of-type {
+  margin-top: 5px;
+}
+.modal-container .modal .party-flex-container .flex-column > div:last-of-type {
+  margin-bottom: 5px;
 }
 
 .safe-nat {
@@ -299,4 +340,4 @@ and (not (-ms-ime-align:auto)) and (not (-moz-appearance:none)) {
 .lean-tpm {
   background: linear-gradient(to right, #AFABAB 50%, #E8747A 50%);
   color: #000 !important;
-}
+}/*# sourceMappingURL=styles.css.map */
