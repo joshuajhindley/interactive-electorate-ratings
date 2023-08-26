@@ -24,12 +24,14 @@ var results2020 = {}
 async function handlePageLoad() {
   await fetch('./2020-results.json').then(resp => resp.json()).then(json => results2020 = json)
   var rowElements = document.getElementsByClassName("flex-row")
+  var index = 1
   for (var rowElem of rowElements) {
     for (var elem of rowElem.children) {
       var simpleName = elem.textContent.toLowerCase().replace(/[āīōū ]/g, match => letterMap[match])
-      elem.id = simpleName
+      elem.id = `${simpleName}-${index}`
       elem.className = results2020[simpleName]
       elem.setAttribute("onclick", "updateElement(id)")
+      index++
     }
   }
 
@@ -40,11 +42,6 @@ async function handlePageLoad() {
         option.setAttribute("onclick", "updateSelected(id)")
       }
     }
-  }
-
-  if (isMobile.any) {
-    var overlayElem = document.getElementsByClassName("overlay").item(0)
-    overlayElem.style.display = "block"
   }
 }
 
@@ -58,23 +55,25 @@ function loadRatings(ratings) {
 
   for(var rowElem of rowElements) {
     for (var elem of rowElem.children) {
-      backupRatings[elem.id] = elem.className
+      const id = elem.id.slice(0, elem.id.lastIndexOf("-"))
+      backupRatings[id] = elem.className
     }
   }
 
   for (var rowElem of rowElements) {
     for (var elem of rowElem.children) {
-      if (!ratings[elem.id]) {
-        alert(`Electorate with id "${elem.id}" missing from JSON file.`)
+      const id = elem.id.slice(0, elem.id.lastIndexOf("-"))
+      if (!ratings[id]) {
+        alert(`Electorate with id "${id}" missing from JSON file.`)
         loadRatings(backupRatings)
         return
-      } else if (!validRatings.includes(ratings[elem.id])) {
-        alert(`Invalid rating "${ratings[elem.id]}" for electorate with id "${elem.id}".\n\nThe valid ratings are "close-race", "safe-nat", "likely-nat", "lean-nat", `+
+      } else if (!validRatings.includes(ratings[id])) {
+        alert(`Invalid rating "${ratings[id]}" for electorate with id "${id}".\n\nThe valid ratings are "close-race", "safe-nat", "likely-nat", "lean-nat", `+
           `"safe-lab", "likely-lab", "lean-lab", "safe-act", "likely-act", "lean-act", "safe-grn", "likely-grn", "lean-grn", "safe-tpm", "likely-tpm", and "lean-tpm".`)
         loadRatings(backupRatings)
         return
       } else {
-        elem.className = ratings[elem.id]
+        elem.className = ratings[id]
       }
     }
   }
@@ -97,6 +96,9 @@ function onChooseFile(event) {
   } else {
     return undefined
   }
+
+  // reset the file to null so the same file can be selected again
+  document.getElementById("import-json").value = null
 }
 
 function importJson() {
@@ -108,7 +110,8 @@ function exportJson() {
   var rowElements = document.getElementsByClassName("flex-row")
   for(var rowElem of rowElements) {
     for (var elem of rowElem.children) {
-      json[elem.id] = elem.className
+      const id = elem.id.slice(0, elem.id.lastIndexOf("-"))
+      json[id] = elem.className
     }
   }
 
@@ -133,15 +136,18 @@ function updateSelected(value) {
 }
 
 function updateElement(id) {
-  var elem = document.getElementById(id)
-  var currClass = elem.getAttribute('class')
-  if (selected === 'close-race') {
-    elem.className = 'close-race'
-  } else if (currClass.includes(selected)) {
-    var nextIndex = (levels.findIndex((val) => val === currClass.split('-')[0]) + 1) % 3
-    elem.className = `${levels[nextIndex]}-${currClass.split('-')[1]}`
-  } else {
-    elem.className = `safe-${selected}`
+  var elems = document.querySelectorAll(`[id^=${id.slice(0, id.lastIndexOf('-'))}]`)
+  console.log(elems)
+  for (var elem of elems) {
+    var currClass = elem.getAttribute('class')
+    if (selected === 'close-race') {
+      elem.className = 'close-race'
+    } else if (currClass.includes(selected)) {
+      var nextIndex = (levels.findIndex((val) => val === currClass.split('-')[0]) + 1) % 3
+      elem.className = `${levels[nextIndex]}-${currClass.split('-')[1]}`
+    } else {
+      elem.className = `safe-${selected}`
+    }
   }
 }
 
