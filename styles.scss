@@ -34,17 +34,25 @@ body {
   display: flex;
   height: 50px;
   margin-bottom: 40px;
+  min-width: 1240px;
 
   .button {
     margin: 5px;
     width: 200px;
     line-height: 48px;
+    font-size: 12px;
     cursor: pointer;
     background-color: #BBB;
     border: 2px solid #000;
     border-radius: 4px;
     height: calc(100% - 4px);
     padding: 0 10px;
+    min-width: 140px;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
   }
 
   .options {
@@ -117,10 +125,11 @@ body {
 h1 {
   vertical-align: baseline;
   font-weight: bold;
+  min-width: 1240px;
 }
 
 .to-capture {
-  /* this is applied just before it is exported */
+  /* this class is applied just before it is exported */
   width: 1450px;
 
   .title-to-export {
@@ -173,6 +182,7 @@ h1 {
       flex: 1;
       font-size: 18px;
       margin: 3px 5px;
+      padding: 0 4px;
       background-color: black;
       color: white;
       align-items: center;
@@ -185,7 +195,15 @@ h1 {
 .lab-message {
   position: absolute;
   top: 810px;
-  right: 150px;
+  // right: 150px;
+  right: 8vw;
+  @media screen and (max-width: 1255px) {
+    right: unset;
+    left: 966px;
+    max-height: 20px;
+    white-space: nowrap;
+    text-align: left;
+  }
 }
 
 .lab-arrow {
@@ -198,7 +216,11 @@ h1 {
 .nat-message {
   position: absolute;
   top: 810px;
-  left: 130px;
+  left: 8vw;//calc(10vw - 130px);
+  @media screen and (max-width: 1255px) {
+    white-space: nowrap;
+    left: 100px;
+  }
 }
 
 .nat-arrow {
@@ -220,6 +242,18 @@ and (not (-ms-ime-align:auto)) and (not (-moz-appearance:none)) {
   .nat-arrow {
     margin-top: -37px !important;
     left: -34px;
+  }
+}
+
+.version {
+  margin-top: -50px;
+  margin-right: -480px;
+  margin-bottom: 36px;
+  font-size: 12px;
+
+  @media screen and (max-width: 1255px) {
+    position: absolute;
+    left: 852px;
   }
 }
 
@@ -246,6 +280,7 @@ and (not (-ms-ime-align:auto)) and (not (-moz-appearance:none)) {
     }
 
     .help-text {
+      line-height: 24px;
       span {
         padding: 2px;
         color: white;
@@ -254,7 +289,7 @@ and (not (-ms-ime-align:auto)) and (not (-moz-appearance:none)) {
 
     .close-modal {
       float: right;
-      margin-top: -95px;
+      margin-top: -135px;
       font-size: 24px;
       // line-height: 20px;
       transform: scaleX(1.3);

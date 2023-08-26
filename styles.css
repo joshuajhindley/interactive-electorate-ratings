@@ -33,17 +33,24 @@ body {
   display: flex;
   height: 50px;
   margin-bottom: 40px;
+  min-width: 1240px;
 }
 .header .button {
   margin: 5px;
   width: 200px;
   line-height: 48px;
+  font-size: 12px;
   cursor: pointer;
   background-color: #BBB;
   border: 2px solid #000;
   border-radius: 4px;
   height: calc(100% - 4px);
   padding: 0 10px;
+  min-width: 140px;
+}
+.header .button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 .header .options {
   display: flex;
@@ -101,10 +108,11 @@ body {
 h1 {
   vertical-align: baseline;
   font-weight: bold;
+  min-width: 1240px;
 }
 
 .to-capture {
-  /* this is applied just before it is exported */
+  /* this class is applied just before it is exported */
   width: 1450px;
 }
 .to-capture .title-to-export {
@@ -151,6 +159,7 @@ h1 {
   flex: 1;
   font-size: 18px;
   margin: 3px 5px;
+  padding: 0 4px;
   background-color: black;
   color: white;
   align-items: center;
@@ -161,7 +170,16 @@ h1 {
 .lab-message {
   position: absolute;
   top: 810px;
-  right: 150px;
+  right: 8vw;
+}
+@media screen and (max-width: 1255px) {
+  .lab-message {
+    right: unset;
+    left: 966px;
+    max-height: 20px;
+    white-space: nowrap;
+    text-align: left;
+  }
 }
 
 .lab-arrow {
@@ -174,7 +192,13 @@ h1 {
 .nat-message {
   position: absolute;
   top: 810px;
-  left: 130px;
+  left: 8vw;
+}
+@media screen and (max-width: 1255px) {
+  .nat-message {
+    white-space: nowrap;
+    left: 100px;
+  }
 }
 
 .nat-arrow {
@@ -196,6 +220,19 @@ h1 {
     left: -34px;
   }
 }
+.version {
+  margin-top: -50px;
+  margin-right: -480px;
+  margin-bottom: 36px;
+  font-size: 12px;
+}
+@media screen and (max-width: 1255px) {
+  .version {
+    position: absolute;
+    left: 852px;
+  }
+}
+
 .modal-container {
   position: fixed;
   display: none;
@@ -217,13 +254,16 @@ h1 {
 .modal-container .modal .help-title {
   font-size: 24px;
 }
+.modal-container .modal .help-text {
+  line-height: 24px;
+}
 .modal-container .modal .help-text span {
   padding: 2px;
   color: white;
 }
 .modal-container .modal .close-modal {
   float: right;
-  margin-top: -95px;
+  margin-top: -135px;
   font-size: 24px;
   transform: scaleX(1.3);
   cursor: pointer;
@@ -340,4 +380,4 @@ h1 {
 .lean-tpm {
   background: linear-gradient(to right, #AFABAB 50%, #E8747A 50%);
   color: #000 !important;
-}/*# sourceMappingURL=styles.css.map */
+}
