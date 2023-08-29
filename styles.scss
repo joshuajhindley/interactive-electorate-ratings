@@ -46,7 +46,7 @@ body {
 }
 
 .header {
-  .desktop {
+  .desktop-header {
     align-items: center;
     justify-content: space-around;
     display: flex;
@@ -148,11 +148,7 @@ body {
   }
 }
 
-.mobile {
-  @media screen and (min-width: $desktop-min-width) {
-    display: none;
-  }
-
+.mobile-header {
   .buttons {
     display: flex;
     width: 99%;
@@ -160,7 +156,6 @@ body {
   }
 
   .options {
-    // display: flex;
     justify-content: space-evenly;
     margin-bottom: 40px;
     width: 99%;
@@ -183,8 +178,14 @@ body {
       }
     }
   }
+}
 
-  .flex-container {
+.mobile {
+  @media screen and (min-width: $desktop-min-width) {
+    display: none !important;
+  }
+
+  &.flex-container {
     max-width: 640px;
 
     .flex-row {
@@ -287,7 +288,7 @@ h1 {
 
   @media screen and (max-width: $fixed-width-below) {
     right: unset;
-    left: 1040px;
+    left: 1028px;
     white-space: nowrap;
   }
 

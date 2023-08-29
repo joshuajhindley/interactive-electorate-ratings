@@ -14,7 +14,7 @@ body {
   }
 }
 
-.header .desktop {
+.header .desktop-header {
   align-items: center;
   justify-content: space-around;
   display: flex;
@@ -23,7 +23,7 @@ body {
   min-width: 1305px;
 }
 @media screen and (max-width: 767.99px) {
-  .header .desktop {
+  .header .desktop-header {
     display: none;
   }
 }
@@ -103,39 +103,40 @@ body {
   background: linear-gradient(to bottom, #C12026 0, #C12026 33%, #E0444B 33%, #E0444B 66%, #E8747A 66%, #E8747A 100%);
 }
 
-@media screen and (min-width: 768px) {
-  .mobile {
-    display: none;
-  }
-}
-.mobile .buttons {
+.mobile-header .buttons {
   display: flex;
   width: 99%;
   margin: 40px 0 20px;
 }
-.mobile .options {
+.mobile-header .options {
   justify-content: space-evenly;
   margin-bottom: 40px;
   width: 99%;
 }
-.mobile .options > div {
+.mobile-header .options > div {
   width: 70px;
   height: 60px;
 }
-.mobile .options > div.help {
+.mobile-header .options > div.help {
   line-height: 60px;
 }
-.mobile .options > div#tpm > div {
+.mobile-header .options > div#tpm > div {
   width: 35px;
   height: 60px;
 }
-.mobile .options > div#tpm > div:last-of-type {
+.mobile-header .options > div#tpm > div:last-of-type {
   margin-left: 35px;
 }
-.mobile .flex-container {
+
+@media screen and (min-width: 768px) {
+  .mobile {
+    display: none !important;
+  }
+}
+.mobile.flex-container {
   max-width: 640px;
 }
-.mobile .flex-container .flex-row {
+.mobile.flex-container .flex-row {
   width: unset;
 }
 
@@ -224,7 +225,7 @@ h1 {
 @media screen and (max-width: 1320px) {
   .lab-message {
     right: unset;
-    left: 1040px;
+    left: 1028px;
     white-space: nowrap;
   }
 }

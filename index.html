@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width">
   <title>NZ Electorates</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik">
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script src="./main.js"></script>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <!-- Google tag (gtag.js) -->
@@ -19,39 +19,13 @@
 </head>
 <body onload="handlePageLoad()">
   <h1>Interactive Electorate Ratings</h1>
-  <div class="version">v0.4.0</div>
+  <div class="version">v0.4.1</div>
   <div class="header">
     <!-- TODO maybe add arrows to explain the order -->
     <!-- TODO replace button text with icons -->
     <!-- TODO maybe replace the existing buttons so it isn't as cramped-->
     <!-- TODO add additional buttons for posting on twitter or loading the latest projection -->
-    <!-- TODO set this using JS instead of unnecessarily duplicating HTML -->
-    <div class="mobile">
-      <div class="buttons">
-        <div class="button" onclick="load2020Results()">
-          LOAD 2020 RESULTS
-        </div>
-        <div class="button" id="import-ratings" onclick="importJson()">
-          IMPORT RATINGS (JSON)
-        </div>
-        <div class="button" onclick="exportJson()">
-          EXPORT RATINGS (JSON)
-        </div>
-        <div class="button" onclick="capture()">
-          EXPORT RATINGS (PNG)
-        </div>
-      </div>
-      <div class="options">
-        <div id="close-race" class="close-race selected"></div>
-        <div id="nat" class="safe-nat"></div>
-        <div id="lab" class="safe-lab"></div>
-        <div class="help" onclick="showHelpModal()">?</div>
-        <div id="act" class="safe-act"></div>
-        <div id="grn" class="safe-grn"></div>
-        <div id="tpm" class="safe-tpm"><div></div><div></div></div>
-      </div>
-    </div>
-    <div class="desktop">
+    <div class="desktop-header">
       <div class="button" onclick="load2020Results()">
         LOAD 2020 RESULTS
       </div>
@@ -78,116 +52,114 @@
   <div class="hidden" style="display: none;">
     <input id="import-json" type="file" accept="application/json" onchange="onChooseFile(event)"/>
   </div>
-  <div class="mobile">
-    <div class="flex-container">
-      <div class="flex-row">
-        <div>KAIPARA KI MAHURANGI</div>
-        <div>KAIKŌURA</div>
-        <div>ŌHĀRIU</div>
-        <div>KELSTON</div>
-      </div>
-      <div class="flex-row">
-        <div>PORT WAIKATO</div>
-        <div>TAURANGA</div>
-        <div>TE ATATŪ</div>
-        <div>DUNEDIN</div>
-      </div>
-      <div class="flex-row">
-        <div>BOTANY</div>
-        <div>WAIMAKARIRI</div>
-        <div>HAURAKI-WAIKATO</div>
-        <div>WIGRAM</div>
-      </div>
-      <div class="flex-row">
-        <div>NORTH SHORE</div>
-        <div>ROTORUA</div>
-        <div>WHANGANUI</div>
-        <div>CHRISTCHURCH CENTRAL</div>
-      </div>
-      <div class="flex-row">
-        <div>COROMANDEL</div>
-        <div>INVERCARGIL</div>
-        <div>TE TAI TOKERAU</div>
-        <div>MOUNT ROSKILL</div>
-      </div>
-      <div class="flex-row">
-        <div>BAY OF PLENTY</div>
-        <div>EPSOM</div>
-        <div>TAKANINI</div>
-        <div>BANKS PENINSULA</div>
-      </div>
-      <div class="flex-row">
-        <div>WAITAKI</div>
-        <div>WAIARIKI</div>
-        <div>TE TAI TONGA</div>
-        <div>NEW LYNN</div>
-      </div>
-      <div class="flex-row">
-        <div>TARANAKI-<br/>KING COUNTRY</div>
-        <div>AUCKLAND CENTRAL</div>
-        <div>WAIRARAPA</div>
-        <div>PALMERSTON NORTH</div>
-      </div>
-      <div class="flex-row">
-        <div>RANGITĪKEI</div>
-        <div>NORTHLAND</div>
-        <div>EAST COAST</div>
-        <div>TAIERI</div>
-      </div>
-      <div class="flex-row">
-        <div>SELWYN</div>
-        <div>WHANGĀREI</div>
-        <div>ŌTAKI</div>
-        <div>MANA</div>
-      </div>
-      <div class="flex-row">
-        <div>TAUPŌ</div>
-        <div>MAUNGAKIEKIE</div>
-        <div>ILAM</div>
-        <div>MANUREWA</div>
-      </div>
-      <div class="flex-row">
-        <div>WAIKATO</div>
-        <div>TĀMAKI MAKAURAU</div>
-        <div>HUTT SOUTH</div>
-        <div>CHRISTCHURCH EAST</div>
-      </div>
-      <div class="flex-row">
-        <div>PAPAKURA</div>
-        <div>TE TAI HAUĀURU</div>
-        <div>RANGITATA</div>
-        <div>PANMURE-ŌTĀHUHU</div>
-      </div>
-      <div class="flex-row">
-        <div>SOUTHLAND</div>
-        <div>TUKITUKI</div>
-        <div>NELSON</div>
-        <div>WELLINGTON CENTRAL</div>
-      </div>
-      <div class="flex-row">
-        <div>WHANGAPĀROA</div>
-        <div>UPPER HARBOUR</div>
-        <div>NAPIER</div>
-        <div>RONGATAI</div>
-      </div>
-      <div class="flex-row">
-        <div>TĀMAKI</div>
-        <div>NORTHCOTE</div>
-        <div>IKAROA-RĀWHITI</div>
-        <div>MĀNGERE</div>
-      </div>
-      <div class="flex-row">
-        <div>EAST COAST BAYS</div>
-        <div>NEW PLYMOUTH</div>
-        <div>WEST COAST-TASMAN</div>
-        <div>REMUTAKA</div>
-      </div>
-      <div class="flex-row">
-        <div>PAKURANGA</div>
-        <div>HAMILTON EAST</div>
-        <div>HAMILTON WEST</div>
-        <div>MOUNT ALBERT</div>
-      </div>
+  <div class="mobile flex-container">
+    <div class="flex-row">
+      <div>KAIPARA KI MAHURANGI</div>
+      <div>KAIKŌURA</div>
+      <div>ŌHĀRIU</div>
+      <div>KELSTON</div>
+    </div>
+    <div class="flex-row">
+      <div>PORT WAIKATO</div>
+      <div>TAURANGA</div>
+      <div>TE ATATŪ</div>
+      <div>DUNEDIN</div>
+    </div>
+    <div class="flex-row">
+      <div>BOTANY</div>
+      <div>WAIMAKARIRI</div>
+      <div>HAURAKI-WAIKATO</div>
+      <div>WIGRAM</div>
+    </div>
+    <div class="flex-row">
+      <div>NORTH SHORE</div>
+      <div>ROTORUA</div>
+      <div>WHANGANUI</div>
+      <div>CHRISTCHURCH CENTRAL</div>
+    </div>
+    <div class="flex-row">
+      <div>COROMANDEL</div>
+      <div>INVERCARGIL</div>
+      <div>TE TAI TOKERAU</div>
+      <div>MOUNT ROSKILL</div>
+    </div>
+    <div class="flex-row">
+      <div>BAY OF PLENTY</div>
+      <div>EPSOM</div>
+      <div>TAKANINI</div>
+      <div>BANKS PENINSULA</div>
+    </div>
+    <div class="flex-row">
+      <div>WAITAKI</div>
+      <div>WAIARIKI</div>
+      <div>TE TAI TONGA</div>
+      <div>NEW LYNN</div>
+    </div>
+    <div class="flex-row">
+      <div>TARANAKI-<br/>KING COUNTRY</div>
+      <div>AUCKLAND CENTRAL</div>
+      <div>WAIRARAPA</div>
+      <div>PALMERSTON NORTH</div>
+    </div>
+    <div class="flex-row">
+      <div>RANGITĪKEI</div>
+      <div>NORTHLAND</div>
+      <div>EAST COAST</div>
+      <div>TAIERI</div>
+    </div>
+    <div class="flex-row">
+      <div>SELWYN</div>
+      <div>WHANGĀREI</div>
+      <div>ŌTAKI</div>
+      <div>MANA</div>
+    </div>
+    <div class="flex-row">
+      <div>TAUPŌ</div>
+      <div>MAUNGAKIEKIE</div>
+      <div>ILAM</div>
+      <div>MANUREWA</div>
+    </div>
+    <div class="flex-row">
+      <div>WAIKATO</div>
+      <div>TĀMAKI MAKAURAU</div>
+      <div>HUTT SOUTH</div>
+      <div>CHRISTCHURCH EAST</div>
+    </div>
+    <div class="flex-row">
+      <div>PAPAKURA</div>
+      <div>TE TAI HAUĀURU</div>
+      <div>RANGITATA</div>
+      <div>PANMURE-ŌTĀHUHU</div>
+    </div>
+    <div class="flex-row">
+      <div>SOUTHLAND</div>
+      <div>TUKITUKI</div>
+      <div>NELSON</div>
+      <div>WELLINGTON CENTRAL</div>
+    </div>
+    <div class="flex-row">
+      <div>WHANGAPĀROA</div>
+      <div>UPPER HARBOUR</div>
+      <div>NAPIER</div>
+      <div>RONGATAI</div>
+    </div>
+    <div class="flex-row">
+      <div>TĀMAKI</div>
+      <div>NORTHCOTE</div>
+      <div>IKAROA-RĀWHITI</div>
+      <div>MĀNGERE</div>
+    </div>
+    <div class="flex-row">
+      <div>EAST COAST BAYS</div>
+      <div>NEW PLYMOUTH</div>
+      <div>WEST COAST-TASMAN</div>
+      <div>REMUTAKA</div>
+    </div>
+    <div class="flex-row">
+      <div>PAKURANGA</div>
+      <div>HAMILTON EAST</div>
+      <div>HAMILTON WEST</div>
+      <div>MOUNT ALBERT</div>
     </div>
   </div>
   <div id="to-capture">

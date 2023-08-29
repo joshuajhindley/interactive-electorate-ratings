@@ -18,8 +18,18 @@ const validRatings = [
   "lean-tpm"
 ]
 const letterMap = { "ā": "a", "ī": "i", "ō": "o", "ū": "u", " ": "-" }
+const MOBILE_BREAKPOINT = 768
 var selected = 'close-race'
 var results2020 = {}
+
+window.addEventListener('resize', event => {
+  const width = event.currentTarget.innerWidth
+  if (width < MOBILE_BREAKPOINT && document.getElementsByClassName("desktop-header").length) {
+    updateHeaderToMobileView()
+  } else if (width >= MOBILE_BREAKPOINT && document.getElementsByClassName("mobile-header").length) {
+    updateHeaderToDesktopView()
+  }
+}, true)
 
 async function handlePageLoad() {
   await fetch('./2020-results.json').then(resp => resp.json()).then(json => results2020 = json)
@@ -35,6 +45,10 @@ async function handlePageLoad() {
     }
   }
 
+  if (window.innerWidth < MOBILE_BREAKPOINT) {
+    updateHeaderToMobileView()
+  }
+
   var optionsElems = document.getElementsByClassName("options")
   for (var optionsElem of optionsElems) {
     for (var option of optionsElem.children) {
@@ -43,6 +57,36 @@ async function handlePageLoad() {
       }
     }
   }
+}
+
+function updateHeaderToMobileView() {
+  const rootElem = document.getElementsByClassName("desktop-header").item(0)
+  const buttonElems = rootElem.getElementsByClassName("button")
+
+  var buttons = document.createElement("div")
+  buttons.className = "buttons"
+
+  for (var buttonElem of Array.from(buttonElems)) {
+    rootElem.removeChild(buttonElem)
+    buttons.appendChild(buttonElem)
+  }
+
+  rootElem.insertAdjacentElement("afterbegin", buttons)
+  rootElem.className = "mobile-header"
+}
+
+function updateHeaderToDesktopView() {
+  const rootElem = document.getElementsByClassName("mobile-header").item(0)
+  const buttons = rootElem.getElementsByClassName("buttons").item(0)
+
+  const buttonElems = Array.from(buttons.children)
+
+  rootElem.removeChild(buttons)
+  rootElem.insertAdjacentElement("afterbegin", buttonElems[1])
+  rootElem.insertAdjacentElement("afterbegin", buttonElems[0])
+  rootElem.insertAdjacentElement("beforeend", buttonElems[2])
+  rootElem.insertAdjacentElement("beforeend", buttonElems[3])
+  rootElem.className = "desktop-header"
 }
 
 function load2020Results() {
@@ -136,8 +180,9 @@ function updateSelected(value) {
 }
 
 function updateElement(id) {
-  var elems = document.querySelectorAll(`[id^=${id.slice(0, id.lastIndexOf('-'))}]`)
-  console.log(elems)
+  var mainId = id.slice(0, id.lastIndexOf('-'))
+  var elems = document.querySelectorAll(`[id^=${mainId}]`)
+  elems = Array.prototype.slice.call(elems).filter(el => el.id.match(`${mainId}-[0-9]+`))
   for (var elem of elems) {
     var currClass = elem.getAttribute('class')
     if (selected === 'close-race') {
